@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Royal Enfield Showroom - Vishwanath Enterprises | Robertsganj, Sonbhadra</title>
+  <meta name="description" content="Official 3D Showroom for Royal Enfield - Vishwanath Enterprises, Robertsganj. Plot No 312K, 309 Varanasi Shakti Nagar Highway, Chhapka, Robertsganj, Uttar Pradesh 231216. Book test rides, service, and Motoverse 2026 passes.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/3d-viewer.css">
+  <!-- Three.js and OrbitControls -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+  <!-- 1. TOP ANNOUNCEMENT & STATUS BAR -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-left">
+        <span id="liveStatusBadge" class="status-badge">
+          <span class="pulse-dot"></span> Checking Status...
+        </span>
+        <span style="color: var(--text-secondary); font-size: 0.8rem;">
+          📍 Varanasi Shakti Nagar Highway, Chhapka, Robertsganj (UP 231216)
+        </span>
+      </div>
+      <div class="top-bar-right">
+        <a href="tel:08291822580" class="top-link">
+          <span>📞</span> <strong>082918 22580</strong>
+        </a>
+        <div class="rating-pill">
+          <span>⭐ 4.9</span> <span>(1,235 Google Reviews)</span>
+        </div>
+        <a href="/admin" class="top-link" style="color: var(--gold-primary);">
+          <span>🔐</span> Admin Portal
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. NAVBAR -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="#" class="brand-logo">
+        <div class="logo-crest">RE</div>
+        <div class="brand-text-block">
+          <span class="brand-title">ROYAL <span>ENFIELD</span></span>
+          <span class="brand-subtitle">Vishwanath Enterprises · Robertsganj</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#showroom3d" class="nav-link">3D Stage</a></li>
+        <li><a href="#motorcycles" class="nav-link">Motorcycles</a></li>
+        <li><a href="#calculatorSection" class="nav-link">EMI Calculator</a></li>
+        <li><a href="#testRideSection" class="nav-link">Test Ride</a></li>
+        <li><a href="#serviceSection" class="nav-link">Service Center</a></li>
+        <li><a href="#reviewsSection" class="nav-link">Reviews (4.9★)</a></li>
+        <li><a href="#locationSection" class="nav-link">Visit Showroom</a></li>
+      </ul>
+
+      <div class="nav-cta-group">
+        <a href="#testRideSection" class="btn btn-primary">Book Test Ride</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 3. MOTOVERSE GOA 2026 BANNER -->
+  <div class="motoverse-banner">
+    <div class="container motoverse-content">
+      <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+        <span class="motoverse-tag">MOTOVERSE 2026</span>
+        <span class="motoverse-text" id="motoverseText">
+          <strong id="motoverseTitle">MOTOVERSE IS BACK!</strong> — <span id="motoverseSub">The Greatest Celebration of Motorcycling Culture returns to Goa. Early Bird Passes live at <strong>₹2,599</strong>. Group of 5 & 10 discounts available.</span>
+        </span>
+      </div>
+      <div>
+        <button class="btn btn-crimson btn-sm" onclick="openMotoverseModal()">Book Passes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 3D HERO SHOWROOM SECTION -->
+  <section id="showroom3d" class="hero-3d-section">
+    <div class="container">
+      <div class="hero-grid">
+        
+        <!-- Left: Branding & Story -->
+        <div class="hero-content">
+          <div class="hero-badge-row">
+            <span class="badge-location">
+              <i>📍</i> Plot No 312K, 309 Robertsganj
+            </span>
+            <span style="font-size: 0.8rem; color: #4ade80;">
+              ✓ In-store Shopping · Delivery
+            </span>
+          </div>
+
+          <h1 class="hero-title">
+            PURE <br>
+            <span class="gold-gradient">MOTORCYCLING</span>
+          </h1>
+
+          <p class="hero-tagline">
+            Experience the iconic thump and legendary heritage at <strong>Vishwanath Enterprises</strong> — Robertsganj’s premier authorized Royal Enfield destination.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#testRideSection" class="btn btn-primary">Schedule Test Ride</a>
+            <button class="btn btn-secondary" id="engineRevBtn">
+              🔊 Rev Engine (Thump)
+            </button>
+          </div>
+
+          <div class="hero-specs-row">
+            <div class="spec-box">
+              <span class="spec-value">349 cc</span>
+              <span class="spec-label">J-Series Engine</span>
+            </div>
+            <div class="spec-box">
+              <span class="spec-value">27 Nm</span>
+              <span class="spec-label">Raw Thump Torque</span>
+            </div>
+            <div class="spec-box">
+              <span class="spec-value">Dual ABS</span>
+              <span class="spec-label">Channel Safety</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Interactive 3D Canvas Stage -->
+        <!-- Right: Photorealistic Showroom Stage & Interactive Customizer -->
+        <div class="stage-3d-wrapper" id="canvasContainer">
+          
+          <!-- Real Luxury Showroom Photo Display -->
+          <div class="showroom-photo-stage" id="showroomPhotoStage">
+            <img src="/assets/bikes/showroom-hero-classic.jpg" alt="Royal Enfield Classic 350 Showroom Display" class="showroom-hero-img" id="showroomHeroImg">
+            
+            <!-- Dynamic Color Aura & Lighting -->
+            <div class="showroom-ambient-glow" id="ambientGlow"></div>
+            <div class="tank-tint-layer" id="tankTintLayer"></div>
+            <div class="showroom-color-overlay"></div>
+
+            <!-- Headlight Beam Cone -->
+            <div class="headlight-beam-cone" id="headlightBeamCone"></div>
+          </div>
+
+          <!-- WebGL Canvas for 3D Studio Mode -->
+          <canvas id="bikeCanvas" style="display: none; position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2;"></canvas>
+
+          <!-- Stage HUD Controls Overlay -->
+          <div class="stage-overlay-hud" style="z-index: 10;">
+            
+            <!-- Top HUD Bar -->
+            <div class="hud-top-bar">
+              <div class="hud-badge-title">
+                <h4>Classic 350</h4>
+                <span id="currentShadeName">Stealth Black (Showroom Edition)</span>
+              </div>
+              <div class="hud-tool-btns">
+                <button class="hud-btn engine-sound-btn" id="engineSoundBtn" title="Toggle Engine Thump Sound (Audio)">
+                  🔊
+                </button>
+                <button class="hud-btn active" id="headlightToggleBtn" title="Toggle Headlight High Beam">
+                  💡
+                </button>
+                <button class="hud-btn" id="viewModeToggleBtn" title="Switch Showroom / 3D Studio Mode">
+                  🔄
+                </button>
+              </div>
+            </div>
+
+            <!-- Floating Interactive Hotspots -->
+            <div class="hotspot-tag" style="top: 35%; left: 62%;">
+              <div class="hotspot-beacon"></div>
+              <div class="hotspot-popover">
+                <h5>Handcrafted Tank</h5>
+                <p>13L teardrop fuel tank with golden winged emblem & custom live paint customizer.</p>
+              </div>
+            </div>
+
+            <div class="hotspot-tag" style="top: 60%; left: 63%;">
+              <div class="hotspot-beacon"></div>
+              <div class="hotspot-popover">
+                <h5>349cc J-Series</h5>
+                <p>Pure single-cylinder thump, 27 Nm torque @ 4000 rpm with butter-smooth counterbalance.</p>
+              </div>
+            </div>
+
+            <div class="hotspot-tag" style="top: 68%; left: 34%;">
+              <div class="hotspot-beacon"></div>
+              <div class="hotspot-popover">
+                <h5>Dual-Channel ABS</h5>
+                <p>300mm front disc with ByBre floating caliper & spoked rim for maximum stopping safety.</p>
+              </div>
+            </div>
+
+            <div class="hotspot-tag" style="top: 28%; left: 45%;">
+              <div class="hotspot-beacon"></div>
+              <div class="hotspot-popover">
+                <h5>Casquette Headlamp</h5>
+                <p>Retro round nacelle with hooded chrome visor & pilot halogen lamps.</p>
+              </div>
+            </div>
+
+            <!-- View Switcher Dock -->
+            <div class="hud-cam-dock">
+              <button class="cam-btn active" id="btnViewShowroom" onclick="switchHeroView('showroom')">Showroom Floor</button>
+              <button class="cam-btn" id="btnViewStudio" onclick="switchHeroView('studio')">3D Studio Stage</button>
+              <button class="cam-btn" onclick="zoomHeroView('tank')">Tank Focus</button>
+              <button class="cam-btn" onclick="zoomHeroView('engine')">Engine 349</button>
+            </div>
+
+            <!-- Bottom Color Customizer Bar with Custom Color Picker -->
+            <div class="hud-bottom-bar">
+              <div class="color-picker-group">
+                <span class="color-label">Paint Color:</span>
+                <div class="color-swatches">
+                  <button class="swatch-btn active" data-color="#181818" data-name="Stealth Black" style="background: #181818;" title="Stealth Black"></button>
+                  <button class="swatch-btn" data-color="#264e36" data-name="Halcyon Green" style="background: #264e36;" title="Halcyon Green"></button>
+                  <button class="swatch-btn" data-color="#8d6438" data-name="Chrome Bronze" style="background: #8d6438;" title="Chrome Bronze"></button>
+                  <button class="swatch-btn" data-color="#9b8054" data-name="Signals Desert Sand" style="background: #9b8054;" title="Signals Desert Sand"></button>
+                  <button class="swatch-btn" data-color="#a81d1d" data-name="Fireball Red" style="background: #a81d1d;" title="Fireball Red"></button>
+                  <button class="swatch-btn" data-color="#1c5d99" data-name="Rebel Blue" style="background: #1c5d99;" title="Rebel Blue"></button>
+                  
+                  <!-- Custom Color Picker for ANY User-Chosen Color -->
+                  <div class="custom-color-picker-wrap" title="Pick ANY Custom Color">
+                    <span class="color-rainbow-icon">🎨</span>
+                    <input type="color" id="customColorPicker" value="#dfa037">
+                  </div>
+                </div>
+              </div>
+              <div class="interaction-hint">
+                <span>✨ Click any shade or 🎨 custom color</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. MOTORCYCLE SHOWROOM LINEUP -->
+  <section id="motorcycles" class="section" style="background: #0d0d12;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">THE RE FLEET IN ROBERTSGANJ</span>
+        <h2 class="section-title">EXPLORE THE MOTORCYCLES</h2>
+        <p class="section-desc">
+          From the legendary Bullet to the all-terrain Himalayan 450 and cafe-racer Continental GT 650. Every machine is tuned for pure riding pleasure.
+        </p>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="filter-tabs">
+        <button class="filter-btn active" data-filter="all">All Motorcycles</button>
+        <button class="filter-btn" data-filter="classic">Classic & Retro</button>
+        <button class="filter-btn" data-filter="heritage">Heritage (Bullet)</button>
+        <button class="filter-btn" data-filter="roadster">Roadster & Urban</button>
+        <button class="filter-btn" data-filter="adventure">Adventure (Himalayan)</button>
+        <button class="filter-btn" data-filter="twins">650 Twins</button>
+      </div>
+
+      <!-- Bikes Dynamic Grid -->
+      <div class="bikes-grid" id="bikesGrid">
+        <!-- Rendered dynamically by app.js from /api/bikes -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. EMI & ON-ROAD PRICE CALCULATOR -->
+  <section id="calculatorSection" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">FINANCIAL TRANSPARENCY</span>
+        <h2 class="section-title">ON-ROAD PRICE & EMI CALCULATOR</h2>
+        <p class="section-desc">
+          Plan your purchase with accurate estimates including Uttar Pradesh RTO registration, insurance, and flexible low-interest bank finance options.
+        </p>
+      </div>
+
+      <div class="calculator-card">
+        <div class="calc-grid">
+          
+          <!-- Sliders & Inputs -->
+          <div class="calc-inputs-col">
+            <div class="range-group">
+              <div class="range-label-row">
+                <span class="range-title">Selected Model</span>
+              </div>
+              <select id="calcBikeSelect" class="form-control" style="font-size: 1rem; padding: 12px;">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+
+            <div class="range-group">
+              <div class="range-label-row">
+                <span class="range-title">Down Payment (%)</span>
+                <span class="range-val-badge" id="downPaymentVal">20% (₹44,300)</span>
+              </div>
+              <input type="range" id="downPaymentRange" min="10" max="60" value="20" step="5">
+            </div>
+
+            <div class="range-group">
+              <div class="range-label-row">
+                <span class="range-title">Loan Tenure (Months)</span>
+                <span class="range-val-badge" id="tenureVal">36 Months (3 Yrs)</span>
+              </div>
+              <input type="range" id="tenureRange" min="12" max="60" value="36" step="6">
+            </div>
+
+            <div class="range-group">
+              <div class="range-label-row">
+                <span class="range-title">Interest Rate (% p.a.)</span>
+                <span class="range-val-badge" id="interestVal">9.5% p.a.</span>
+              </div>
+              <input type="range" id="interestRange" min="7.5" max="14.0" value="9.5" step="0.25">
+            </div>
+          </div>
+
+          <!-- Result Display Box -->
+          <div class="calc-result-box">
+            <div class="emi-amount-label">Estimated Monthly EMI</div>
+            <div class="emi-amount-val" id="monthlyEmiDisplay">₹5,620</div>
+
+            <div class="emi-breakdown">
+              <div class="breakdown-row">
+                <span>Est. On-Road Price (Robertsganj RTO):</span>
+                <span id="calcOnRoadPrice">₹2,21,500</span>
+              </div>
+              <div class="breakdown-row">
+                <span>Total Loan Amount:</span>
+                <span id="calcLoanAmount">₹1,77,200</span>
+              </div>
+              <div class="breakdown-row">
+                <span>Total Interest Payable:</span>
+                <span id="calcTotalInterest">₹25,120</span>
+              </div>
+            </div>
+
+            <a href="#testRideSection" class="btn btn-primary" style="width: 100%;">
+              Apply For Finance At Showroom
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. BOOK A TEST RIDE SECTION -->
+  <section id="testRideSection" class="section booking-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">EXPERIENCE THE THUMP</span>
+        <h2 class="section-title">BOOK A TEST RIDE</h2>
+        <p class="section-desc">
+          Feel the torque and road presence on the open Varanasi Shakti Nagar Highway. Choose your preferred slot at Vishwanath Enterprises.
+        </p>
+      </div>
+
+      <div class="form-card" style="max-width: 800px; margin: 0 auto;">
+        <form id="testRideForm">
+          <div class="form-grid">
+            
+            <div class="form-group">
+              <label class="form-label">Full Name *</label>
+              <input type="text" id="testRideName" class="form-control" placeholder="e.g. Ramesh Singh" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Mobile Number *</label>
+              <input type="tel" id="testRidePhone" class="form-control" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address (Optional)</label>
+              <input type="email" id="testRideEmail" class="form-control" placeholder="name@example.com">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Motorcycle Model *</label>
+              <select id="testRideBike" class="form-control" required>
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Preferred Date *</label>
+              <input type="date" id="testRideDate" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Preferred Time Slot *</label>
+              <select id="testRideSlot" class="form-control" required>
+                <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+                <option value="11:30 AM - 12:30 PM">11:30 AM - 12:30 PM</option>
+                <option value="02:00 PM - 03:00 PM">02:00 PM - 03:00 PM</option>
+                <option value="04:00 PM - 05:00 PM">04:00 PM - 05:00 PM</option>
+                <option value="05:30 PM - 06:30 PM">05:30 PM - 06:30 PM</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Your Location / City</label>
+              <input type="text" id="testRideCity" class="form-control" placeholder="Robertsganj / Chhapka / Obra / Renukoot" value="Robertsganj">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Driving License Status</label>
+              <select class="form-control" required>
+                <option value="yes">Yes, I hold a valid Two-Wheeler Driving License</option>
+                <option value="learning">Valid Learner's License</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label">Special Requests / Specific Color</label>
+              <input type="text" id="testRideNotes" class="form-control" placeholder="e.g. Want to test Stealth Black or discuss exchange of old motorcycle">
+            </div>
+
+            <div class="form-group full-width" style="margin-top: 10px;">
+              <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;">
+                Confirm Test Ride Slot
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. SERVICE & WORKSHOP BOOKING -->
+  <section id="serviceSection" class="section" style="background: #0e0e14;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">AUTHORIZED CARE</span>
+        <h2 class="section-title">SERVICE & WORKSHOP CENTER</h2>
+        <p class="section-desc">
+          Genuine Royal Enfield spare parts, factory-trained master technicians, specialized diagnostic tools, and dedicated maintenance bays at Vishwanath Enterprises.
+        </p>
+      </div>
+
+      <div class="form-card" style="max-width: 800px; margin: 0 auto;">
+        <form id="serviceForm">
+          <div class="form-grid">
+            
+            <div class="form-group">
+              <label class="form-label">Owner Name *</label>
+              <input type="text" id="serviceName" class="form-control" placeholder="Your name" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Contact Number *</label>
+              <input type="tel" id="servicePhone" class="form-control" placeholder="10-digit number" pattern="[0-9]{10}" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Bike Model *</label>
+              <select id="serviceBike" class="form-control" required>
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Registration Number</label>
+              <input type="text" id="serviceRegNo" class="form-control" placeholder="e.g. UP 64 AB 1234">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Service Type *</label>
+              <select id="serviceType" class="form-control" required>
+                <option value="Periodic Free Service">Periodic Free Service (1st / 2nd / 3rd)</option>
+                <option value="Paid General Maintenance">Paid General Maintenance</option>
+                <option value="Engine Oil & Filter Replacement">Engine Oil & Filter Replacement</option>
+                <option value="Brake & Chain Overhaul">Brake & Chain Overhaul</option>
+                <option value="Electrical / Tripper Diagnosis">Electrical / Tripper Diagnosis</option>
+                <option value="Accidental Repair & Insurance Claim">Accidental Repair & Insurance Claim</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Preferred Date *</label>
+              <input type="date" id="serviceDate" class="form-control" required>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label">Specific Issues / Observations</label>
+              <textarea id="serviceNotes" class="form-control" rows="2" placeholder="Mention any noise, brake issues, or custom accessory installation required"></textarea>
+            </div>
+
+            <div class="form-group full-width" style="margin-top: 10px;">
+              <button type="submit" class="btn btn-secondary" style="width: 100%; padding: 14px; border-color: var(--border-gold); color: var(--gold-light);">
+                Schedule Service Appointment
+              </button>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. GOOGLE REVIEWS SECTION (4.9 Rating ⭐ 1,235 Reviews) -->
+  <section id="reviewsSection" class="section">
+    <div class="container">
+      
+      <div class="section-header">
+        <span class="section-tag">GOOGLE VERIFIED RATING</span>
+        <h2 class="section-title">WHAT RIDERS SAY ABOUT US</h2>
+        <p class="section-desc">
+          Over 1,235 authentic Google reviews commend our prompt deliveries, transparent pricing, and courteous hospitality.
+        </p>
+      </div>
+
+      <!-- Rating Summary Banner -->
+      <div class="reviews-stat-banner">
+        <div class="score-display">
+          <div class="score-number">4.9</div>
+          <div>
+            <div class="score-stars">★★★★★</div>
+            <div class="score-caption">Based on <strong>1,235 Verified Google Reviews</strong></div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <button class="btn btn-outline-gold" onclick="openReviewModal()">
+            ✍️ Write a Review
+          </button>
+          <a href="https://dealers.royalenfield.com/uttar-pradesh/robertsganj/chhapka-vishwanath-enterprises-9110074290" target="_blank" class="btn btn-secondary">
+            View on Official RE Portal
+          </a>
+        </div>
+      </div>
+
+      <!-- Reviews Grid -->
+      <div class="reviews-grid" id="reviewsGrid">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 10. LOCATION, HOURS & CONTACT -->
+  <section id="locationSection" class="section" style="background: #090a0d;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">VISIT OUR SHOWROOM</span>
+        <h2 class="section-title">VISHWANATH ENTERPRISES</h2>
+        <p class="section-desc">
+          Conveniently located on the main Varanasi Shakti Nagar Highway in Chhapka, Robertsganj.
+        </p>
+      </div>
+
+      <div class="location-grid">
+        
+        <!-- Details Card -->
+        <div class="location-info-card">
+          <h3 style="font-size: 1.5rem; margin-bottom: 22px; color: var(--gold-light);">
+            रॉयल एनफील्ड शोरूम - विश्वनाथ एंटरप्राइजेज
+          </h3>
+
+          <div class="info-item">
+            <div class="info-icon">📍</div>
+            <div>
+              <div class="info-title">Showroom Address</div>
+              <div class="info-val">
+                Plot No 312K, 309 Varanasi Shakti Nagar Highway,<br>
+                Chhapka, Robertsganj, Uttar Pradesh 231216
+              </div>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">📞</div>
+            <div>
+              <div class="info-title">Direct Contact Phone</div>
+              <div class="info-val">
+                <a href="tel:08291822580" style="color: var(--gold-light); font-weight: 700;">
+                  082918 22580 / +91 82918 22580
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">⏰</div>
+            <div>
+              <div class="info-title">Working Hours</div>
+              <div class="info-val">
+                Monday to Sunday: <strong>9:30 AM - 8:00 PM</strong><br>
+                <span style="font-size: 0.85rem; color: #4ade80;">Showroom & Service center open 7 days</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">🧭</div>
+            <div>
+              <div class="info-title">Google Plus Code</div>
+              <div class="info-val">
+                <strong>M355+7V Robertsganj, Uttar Pradesh</strong>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 14px; margin-top: 30px; flex-wrap: wrap;">
+            <a href="https://maps.google.com/?q=M355%2B7V+Robertsganj,+Uttar+Pradesh" target="_blank" class="btn btn-primary">
+              🗺️ Open in Google Maps
+            </a>
+            <a href="tel:08291822580" class="btn btn-secondary">
+              📞 Call Dealership
+            </a>
+          </div>
+        </div>
+
+        <!-- Google Map Iframe -->
+        <div class="map-wrapper">
+          <iframe 
+            class="map-iframe"
+            title="Royal Enfield Vishwanath Enterprises Robertsganj Map"
+            src="https://maps.google.com/maps?q=Royal%20Enfield%20Showroom%20Vishwanath%20Enterprises%20Robertsganj%20Uttar%20Pradesh%20231216&t=&z=14&ie=UTF8&iwloc=&output=embed"
+            loading="lazy"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div>
+          <div class="brand-logo" style="margin-bottom: 16px;">
+            <div class="logo-crest">RE</div>
+            <div class="brand-text-block">
+              <span class="brand-title">ROYAL <span>ENFIELD</span></span>
+              <span class="brand-subtitle">Vishwanath Enterprises</span>
+            </div>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">
+            Official Dealership for Robertsganj and the greater Sonbhadra region. Dedicated to the enduring spirit of pure motorcycling since 1901.
+          </p>
+          <div style="font-size: 0.85rem; color: var(--gold-light);">
+            रॉयल एनफील्ड का वादा · बेमिसाल मजबूती और शान
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="#showroom3d" class="footer-link">3D Motorcycle Stage</a></li>
+            <li><a href="#motorcycles" class="footer-link">Bikes Catalog & Specs</a></li>
+            <li><a href="#calculatorSection" class="footer-link">UP RTO & EMI Calculator</a></li>
+            <li><a href="#testRideSection" class="footer-link">Book a Test Ride</a></li>
+            <li><a href="#serviceSection" class="footer-link">Workshop Appointment</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Fleet Models</h4>
+          <ul class="footer-links">
+            <li><a href="#motorcycles" class="footer-link">Classic 350</a></li>
+            <li><a href="#motorcycles" class="footer-link">Bullet 350</a></li>
+            <li><a href="#motorcycles" class="footer-link">Hunter 350</a></li>
+            <li><a href="#motorcycles" class="footer-link">Himalayan 450</a></li>
+            <li><a href="#motorcycles" class="footer-link">Continental GT 650</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Showroom Hub</h4>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 10px;">
+            Plot No 312K, 309 Varanasi Shakti Nagar Highway, Chhapka, Robertsganj, UP 231216
+          </p>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 14px;">
+            Helpline: <strong>082918 22580</strong>
+          </p>
+          <a href="/admin" class="btn btn-secondary btn-sm" style="width: 100%;">
+            🔐 Staff / Admin Dashboard
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 Royal Enfield Showroom - Vishwanath Enterprises. All rights reserved.
+        </div>
+        <div style="display: flex; gap: 18px;">
+          <span>In-Store Shopping</span>
+          <span>In-Store Pick-Up</span>
+          <span>Doorstep Delivery</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 12. MOTOVERSE 2026 MODAL -->
+  <div class="modal-overlay" id="motoverseModal">
+    <div class="modal-box">
+      <button class="modal-close-btn">&times;</button>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <span class="motoverse-tag" style="margin-bottom: 10px;">MOTOVERSE GOA 2026</span>
+        <h3 style="font-size: 1.6rem; color: #fff;">Book Motoverse Passes</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 6px;">
+          Early bird passes starting at ₹2,599 with special group discounts for Robertsganj riding crews.
+        </p>
+      </div>
+
+      <form id="motoverseForm">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="mvName" class="form-control" required placeholder="Rider Name">
+        </div>
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" id="mvPhone" class="form-control" required placeholder="10-digit mobile">
+        </div>
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="mvEmail" class="form-control" placeholder="rider@domain.com">
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-label">Pass Type & Crew Size</label>
+          <select id="mvDetails" class="form-control">
+            <option value="Single Early Bird Pass (₹2,599)">Single Early Bird Pass (₹2,599)</option>
+            <option value="Group of 5 Passes (Discounted Rate)">Group of 5 Passes (Special Price)</option>
+            <option value="Group of 10 Passes (VIP Crew Rate)">Group of 10 Passes (VIP Crew Rate)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-crimson" style="width: 100%; padding: 12px;">
+          Submit Pass Request
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 13. WRITE A REVIEW MODAL -->
+  <div class="modal-overlay" id="reviewModal">
+    <div class="modal-box">
+      <button class="modal-close-btn">&times;</button>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h3 style="font-size: 1.5rem; color: #fff;">Share Your Showroom Experience</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary);">
+          Your feedback helps Vishwanath Enterprises serve riders in Sonbhadra better.
+        </p>
+      </div>
+
+      <form id="reviewForm">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Your Name</label>
+          <input type="text" id="reviewAuthor" class="form-control" required placeholder="e.g. Anand Kumar">
+        </div>
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Rating</label>
+          <select id="reviewRating" class="form-control">
+            <option value="5">⭐⭐⭐⭐⭐ (5 - Exceptional Experience)</option>
+            <option value="4">⭐⭐⭐⭐ (4 - Very Good)</option>
+            <option value="3">⭐⭐⭐ (3 - Average)</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-label">Your Review</label>
+          <textarea id="reviewText" class="form-control" rows="3" required placeholder="Tell us about the bike delivery, staff behavior, or service support"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">
+          Publish Review
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/audio-synth.js"></script>
+  <script src="js/bike3d.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

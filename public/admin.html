@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal - Vishwanath Enterprises | Royal Enfield Robertsganj</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="admin-login-screen">
+    <div class="login-card">
+      <div class="login-logo">RE</div>
+      <h2 class="login-title">DEALER ADMIN PORTAL</h2>
+      <p class="login-subtitle">Royal Enfield Showroom - Vishwanath Enterprises, Robertsganj</p>
+
+      <form id="loginForm" autocomplete="off">
+        <div class="form-group" style="text-align: left; margin-bottom: 16px;">
+          <label class="form-label">Username</label>
+          <input type="text" id="adminUsername" class="form-control" placeholder="Enter Admin Username" required autocomplete="username">
+        </div>
+        <div class="form-group" style="text-align: left; margin-bottom: 24px;">
+          <label class="form-label">Password</label>
+          <div style="position: relative;">
+            <input type="password" id="adminPassword" class="form-control" placeholder="Enter Password" required autocomplete="current-password" style="padding-right: 48px;">
+            <button type="button" id="togglePasswordBtn" onclick="togglePasswordVisibility()" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1.1rem; padding: 0; line-height: 1;" title="Show/Hide Password">
+              👁️
+            </button>
+          </div>
+        </div>
+        <div id="loginError" style="display: none; background: rgba(220,38,38,0.15); border: 1px solid #dc2626; color: #f87171; padding: 10px 14px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 14px;"></div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px;">
+          Sign In to Dashboard
+        </button>
+      </form>
+
+      <div style="margin-top: 20px;">
+        <a href="/" style="font-size: 0.82rem; color: var(--text-muted);">← Return to Public Showroom</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATED ADMIN APPLICATION -->
+  <div id="adminApp" style="display: none;">
+    
+    <!-- HEADER -->
+    <header class="admin-header">
+      <div class="admin-brand">
+        <div class="logo-crest" style="width: 38px; height: 38px; font-size: 1rem;">RE</div>
+        <div>
+          <span style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 700; color: #fff;">
+            VISHWANATH ENTERPRISES
+          </span>
+          <span class="admin-title-badge">ADMIN</span>
+        </div>
+      </div>
+
+      <div class="admin-header-actions">
+        <a href="/" target="_blank" class="btn btn-secondary btn-sm">
+          🌐 View Live Website
+        </a>
+        <div class="admin-user-pill">
+          <span>👤</span> <strong style="color: #fff;">Admin</strong>
+        </div>
+        <button id="logoutBtn" class="btn btn-crimson btn-sm">
+          Log Out
+        </button>
+      </div>
+    </header>
+
+    <!-- DASHBOARD CONTAINER -->
+    <main class="admin-container">
+      
+      <!-- STATS KPI CARDS -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon">🏍️</div>
+          <div>
+            <div class="kpi-val" id="kpiTestRides">0</div>
+            <div class="kpi-label">Test Ride Requests</div>
+            <div style="font-size: 0.72rem; color: var(--gold-light); margin-top: 2px;" id="kpiPendingTR">0 Pending</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon crimson">🔧</div>
+          <div>
+            <div class="kpi-val" id="kpiServices">0</div>
+            <div class="kpi-label">Workshop Bookings</div>
+            <div style="font-size: 0.72rem; color: #f87171; margin-top: 2px;" id="kpiPendingSrv">0 Pending</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon">🎟️</div>
+          <div>
+            <div class="kpi-val" id="kpiInquiries">0</div>
+            <div class="kpi-label">Inquiries & Motoverse</div>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-icon green">⭐</div>
+          <div>
+            <div class="kpi-val" id="kpiReviews">0</div>
+            <div class="kpi-label">Google Reviews (4.9★)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB NAVIGATION -->
+      <div class="admin-tabs">
+        <button class="admin-tab-btn active" data-tab="tabTestRides">
+          🏍️ Test Rides <span class="tab-badge" id="badgeCountTR">0</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="tabServices">
+          🔧 Workshop Services <span class="tab-badge" id="badgeCountSrv">0</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="tabInquiries">
+          🎟️ Inquiries & Leads <span class="tab-badge" id="badgeCountInq">0</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="tabBikes">
+          🏷️ Bike Pricing & Specs
+        </button>
+        <button class="admin-tab-btn" data-tab="tabReviews">
+          ⭐ Customer Reviews <span class="tab-badge" id="badgeCountRev">0</span>
+        </button>
+        <button class="admin-tab-btn" data-tab="tabAnnouncements">
+          📢 Banner Announcements
+        </button>
+      </div>
+
+      <!-- TAB 1: TEST RIDES -->
+      <section id="tabTestRides" class="admin-panel active">
+        <div class="panel-header-row">
+          <h3 class="panel-title">Test Ride Bookings (Robertsganj)</h3>
+          <div class="panel-search-bar">
+            <span>🔍</span>
+            <input type="text" id="testRideSearch" placeholder="Search by name, phone, bike...">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Customer</th>
+                <th>Model & Color</th>
+                <th>Date & Slot</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="testRidesTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 2: SERVICES -->
+      <section id="tabServices" class="admin-panel">
+        <div class="panel-header-row">
+          <h3 class="panel-title">Workshop & Maintenance Bookings</h3>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Job Card ID</th>
+                <th>Customer</th>
+                <th>Vehicle & Reg No</th>
+                <th>Service Type</th>
+                <th>Preferred Slot</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="servicesTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 3: INQUIRIES & MOTOVERSE -->
+      <section id="tabInquiries" class="admin-panel">
+        <div class="panel-header-row">
+          <h3 class="panel-title">Customer Enquiries & Motoverse 2026 Passes</h3>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Ref ID</th>
+                <th>Lead Name</th>
+                <th>Category</th>
+                <th>Details / Crew Request</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inquiriesTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 4: BIKES PRICING -->
+      <section id="tabBikes" class="admin-panel">
+        <div class="panel-header-row">
+          <h3 class="panel-title">Motorcycle Catalog & Robertsganj Pricing</h3>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Category</th>
+                <th>Ex-Showroom (₹)</th>
+                <th>On-Road Est. (₹)</th>
+                <th>Power Output</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bikesTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 5: REVIEWS MODERATION -->
+      <section id="tabReviews" class="admin-panel">
+        <div class="panel-header-row">
+          <h3 class="panel-title">Customer Reviews (4.9 Rating ⭐)</h3>
+        </div>
+
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Stars</th>
+                <th>Feedback</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="reviewsTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TAB 6: BANNER ANNOUNCEMENTS -->
+      <section id="tabAnnouncements" class="admin-panel">
+        <div class="panel-header-row">
+          <h3 class="panel-title">Homepage Announcement & Festive Offers</h3>
+        </div>
+
+        <div style="max-width: 680px;">
+          <form id="announcementForm">
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label class="form-label">Headline Title</label>
+              <input type="text" id="annTitle" class="form-control" required>
+            </div>
+            <div class="form-group" style="margin-bottom: 16px;">
+              <label class="form-label">Subtitle / Details</label>
+              <textarea id="annSub" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="form-group" style="margin-bottom: 24px;">
+              <label class="form-label">Festive Offer Notice</label>
+              <input type="text" id="annFestive" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Update Live Announcements
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- EXCLUSIVE ADMIN PRICE EDITOR MODAL -->
+    <div class="modal-overlay" id="priceEditorModal">
+      <div class="modal-box" style="max-width: 520px;">
+        <button class="modal-close-btn" onclick="closePriceEditorModal()">&times;</button>
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 20px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+          <img id="editBikeImg" src="" alt="Bike Preview" style="width: 80px; height: 55px; object-fit: contain; background: #1c1c24; border-radius: 6px; padding: 4px; border: 1px solid var(--border-gold);">
+          <div>
+            <h3 id="editBikeName" style="font-size: 1.4rem; color: #fff; margin-bottom: 2px;">Model Name</h3>
+            <span id="editBikeCategory" class="bike-badge" style="position: static; font-size: 0.7rem;">Category</span>
+          </div>
+        </div>
+
+        <form id="priceEditorForm">
+          <input type="hidden" id="editBikeId">
+
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label class="form-label">Ex-Showroom Price (₹) *</label>
+            <input type="number" id="editExPrice" class="form-control" required min="50000" step="100" style="font-size: 1.1rem; font-weight: 700; color: var(--gold-light);">
+            <span style="font-size: 0.72rem; color: var(--text-muted);">Base dealer invoice price in Robertsganj</span>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <label class="form-label" style="margin-bottom: 0;">On-Road Price (₹) *</label>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="autoCalculateOnRoad()" style="padding: 2px 8px; font-size: 0.7rem;">
+                ⚡ Auto Calc (UP RTO 8% + Ins)
+              </button>
+            </div>
+            <input type="number" id="editOnRoadPrice" class="form-control" required min="50000" step="100" style="font-size: 1.1rem; font-weight: 700; color: #fff;">
+            <span style="font-size: 0.72rem; color: var(--text-muted);">Includes UP Road Tax / RTO + 5-yr Insurance</span>
+          </div>
+
+          <div style="background: rgba(229, 169, 60, 0.08); border: 1px dashed var(--border-gold); padding: 10px 14px; border-radius: 6px; margin-bottom: 22px; font-size: 0.78rem; color: var(--gold-light);">
+            🔒 <strong>Admin Action:</strong> Saving this will instantly update the price on the live public website and the customer EMI calculator.
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="closePriceEditorModal()" style="flex: 1;">Cancel</button>
+            <button type="submit" id="savePriceBtn" class="btn btn-primary" style="flex: 2;">Save & Publish Price</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
